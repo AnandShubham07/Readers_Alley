@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book | Library</title>
+    <link rel="stylesheet" href="{% static 'books/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <h2>Library Administration</h2>
+        <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a href="{%url 'browse_books'%}">Browse Books</a>
+    </header>
+
+    <main class="hero">
+        <h1>Add a New Book</h1>
+        <p>Enter the book details below.</p>
+
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+
+        {% if success %}
+            <p style="color: green;">{{ success }}</p>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Book ID</label><br>
+            <input type="text" name="book_id" required><br><br>
+
+            <label>Book Title</label><br>
+            <input type="text" name="title" required><br><br>
+
+            <label>Author</label><br>
+            <input type="text" name="author" required><br><br>
+
+            <button type="submit" class="button button-primary">
+                Add Book
+            </button>
+        </form>
+    </main>
+</body>
+</html>

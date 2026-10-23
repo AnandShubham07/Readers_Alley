@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+
+    <link rel="stylesheet" href="{% static 'books/style.css' %}">
+</head>
+<body>
+
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <div class="logo">📚 Library Management</div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/admin/">Admin</a>
+        </div>
+    </nav>
+
+    <!-- Main banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover Your Next Great Read</h1>
+
+            <p>
+                Explore books, discover knowledge, and make every
+                reading experience meaningful with our library.
+            </p>
+
+            <a href="#features" class="button button-primary">
+                Explore Library
+            </a>
+
+            <a href="#footer" class="button button-outline">
+                Learn More
+            </a>
+        </div>
+    </section>
+
+    <!-- Feature cards -->
+    <section class="features" id="features">
+        <h2>Explore Your Library</h2>
+
+        <p class="section-description">
+            Everything you need to manage and explore your library.
+        </p>
+
+        <div class="card-container">
+
+            <a href="{% url 'browse_books' %}" class="feature-card"
+            style="text-decoration: none; color: inherit; display: block;">
+                <div class="feature-icon">📖</div>
+                <h3>Browse Books</h3>
+                <p>Discover books available in our collection.</p>
+            </a>
+
+            <a href="{% url 'login' %}?role=user"
+            class="feature-card"
+            style="text-decoration:none; color:inherit; display:block;">
+                <div class="feature-icon">👤</div>
+                <h3>My Account</h3>
+                <p>View your profile and track issued books.</p>
+            </a>
+
+
+            <a href="{% url 'login' %}?role=admin"
+            class="feature-card"
+            style="text-decoration:none; color:inherit; display:block;">
+                <div class="feature-icon">🛠️</div>
+                <h3>Library Administration</h3>
+                <p>Manage books, members, and borrowing records.</p>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <p>Library Management System</p>
+        <p>Knowledge grows when it is shared.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard | Library</title>
+    <link rel="stylesheet" href="{% static 'books/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <h2>Library Management System</h2>
+        <a href="{% url 'logout' %}">Logout</a>
+    </header>
+
+    <main class="hero">
+        <h1>Welcome, {{ request.user.username }}!</h1>
+        <p>Manage your library activities from one place.</p>
+
+        <div class="features">
+            <a href="{% url 'browse_books' %}" class="feature-card">
+                <h3>Browse Books</h3>
+                <p>Explore the available books in the library.</p>
+            </a>
+
+            <div class="feature-card">
+                <h3>My Issued Books</h3>
+                <p>View the books you have borrowed.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>My Profile</h3>
+                <p>Account: {{ request.user.username }}</p>
+            </div>
+        </div>
+
+        <a href="{% url 'home' %}" class="button button-primary">
+            Back to Home
+        </a>
+    </main>
+</body>
+</html>

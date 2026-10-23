@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Issue Book</title>
+    <link rel="stylesheet" href="{% static 'books/style.css' %}">
+</head>
+<body>
+    <main class="hero">
+        <h1>Issue a Book</h1>
+        <p>{{ message }}</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label>User ID</label>
+            <input name="user_id" maxlength="20" required>
+
+            <label>Book</label>
+            <select name="book_id" required>
+                {% for book in books %}
+                    <option value="{{ book.book_id }}">
+                        {{ book.title }} ({{ book.book_id }})
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="button button-primary">
+                Issue Book
+            </button>
+        </form>
+
+        <a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+    </main>
+</body>
+</html>

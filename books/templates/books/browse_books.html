@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Books | Library</title>
+    <link rel="stylesheet" href="{% static 'books/style.css' %}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">📚 Library Management</div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'browse_books' %}">Browse Books</a>
+        </div>
+    </nav>
+
+    <section class="features">
+        <h2>Browse Our Books</h2>
+        <p class="section-description">
+            Explore the books currently registered in our library.
+        </p>
+
+        <div class="book-list">
+            {% for book in books %}
+                <div class="feature-card">
+                    <h3>{{ book.title }}</h3>
+                    <p><strong>Book ID:</strong> {{ book.book_id }}</p>
+                    <p><strong>Author:</strong> {{ book.author }}</p>
+                    <p>
+                        <strong>Status:</strong>
+                        {% if book.available %}
+                            Available
+                        {% else %}
+                            Issued
+                        {% endif %}
+                    </p>
+                </div>
+            {% empty %}
+                <p>No books are currently registered.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>Knowledge grows when it is shared.</p>
+    </footer>
+
+</body>
+</html>
