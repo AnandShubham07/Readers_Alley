@@ -19,7 +19,7 @@ Technology Stack
 - Version control: Git and GitHub
 
 Project Structure
-
+```text
 project/
 ├── books/
 ├── library_project/
@@ -28,6 +28,7 @@ project/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+```
 
 Setup Instructions
 
