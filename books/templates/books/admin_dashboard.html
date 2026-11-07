@@ -14,35 +14,53 @@
     </header>
 
     <main class="hero">
-        <h1>Welcome, {{ request.user.username }}!</h1>
+        
+        <h1>Welcome, {{ request.user.username }}!</h1>        
         <p>Manage the library's books and operations.</p>
+        <section class="feature-card" >
+        <div class="card-container">
 
-        <div class="features">
-            <a href="{% url 'browse_books' %}" class="feature-card">
-                <h3>Browse Books</h3>
-                <p>View the library catalogue.</p>
-            </a>
-
-            <a href="{%url 'add_book'%}"
-             class="feature-card">
+            <a href="{% url 'add_book' %}" class="feature-card">
+                <div class="feature-icon">📚</div>
                 <h3>Add Book</h3>
-                <p>We will connect this to the Add Book form next.</p>
+                <p>Add a new book to the library collection.</p>
             </a>
 
             <a href="{% url 'issue_book' %}" class="feature-card">
-                <h3>Issue  Books</h3>
-                <p>We will connect these to the database next.</p>
+                <div class="feature-icon">📖</div>
+                <h3>Issue Book</h3>
+                <p>Issue a book to a registered library user.</p>
             </a>
 
             <a href="{% url 'return_book' %}" class="feature-card">
+                <div class="feature-icon">↩️</div>
                 <h3>Return Book</h3>
                 <p>Record a returned book.</p>
             </a>
-        </div>
 
+            <a href="{% url 'add_user' %}" class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3>Add Library User</h3>
+                <p>Register a new library member.</p>
+            </a>
+
+            <a href="{% url 'user_list' %}" class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Registered Users</h3>
+                <p>View the registered library members.</p>
+            </a>
+
+            <a href="{% url 'issue_history' %}" class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Issue History</h3>
+                <p>Track issued books, returns, and fines.</p>
+            </a>
+
+        </div>
+        </section>
         <a href="{% url 'home' %}" class="button button-primary">
             Back to Home
         </a>
-    </main>
+    </main>   
 </body>
 </html>

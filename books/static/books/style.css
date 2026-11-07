@@ -120,9 +120,14 @@ body {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
+    padding: 15px 5%;
+    align-items: stretch;
 }
 
 .feature-card {
+    display: block;
+    text-align: center;
+    text-decoration: none;
     background: white;
     padding: 30px 22px;
     border-radius: 14px;
@@ -183,6 +188,7 @@ body {
     }
 
     .features {
+        grid-template-columns: 1fr;
         padding: 40px 6%;
     }
 
@@ -190,3 +196,145 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* Registered users page */
+
+.users-panel {
+    width: 85%;
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(15, 25, 40, 0.88);
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+}
+
+.users-panel h1 {
+    margin-bottom: 10px;
+}
+
+.users-summary {
+    margin: 20px 0;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 25px 0;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.95);
+    color: #222;
+}
+
+.users-table th,
+.users-table td {
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.users-table th {
+    background: #173b59;
+    color: white;
+}
+
+.users-table tbody tr:nth-child(even) {
+    background: #eaf0f5;
+}
+
+.users-table tbody tr:hover {
+    background: #d5e8f7;
+}
+
+.action-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 22px;
+    background: #087cc1;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+}
+
+.action-button:hover {
+    background: #065b91;
+}
+
+/* User ID suggestion */
+
+.id-hint {
+    margin: 10px 0;
+    color: #b9e5ff;
+}
+
+.status-issued {
+    color: #087cc1;
+    font-weight: bold;
+}
+
+.status-returned {
+    color: #16803c;
+    font-weight: bold;
+}
+
+.status-overdue {
+    color: #dc2626;
+    font-weight: bold;
+}
+
+/* Issue history search and filters */
+
+.history-filter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 25px 0;
+}
+
+.history-filter input,
+.history-filter select {
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.history-filter button {
+    padding: 11px 18px;
+    border: none;
+    border-radius: 6px;
+    background: #087cc1;
+    color: white;
+    cursor: pointer;
+}
+
+.history-filter a {
+    color: #b9e5ff;
+    text-decoration: none;
+}
+
+.history-filter button:hover {
+    background: #065b91;
+}
+
+.users-table {
+    min-width: 1000px;
+}
+
+.users-panel {
+    overflow: hidden;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+

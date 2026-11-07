@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Library Users</title>
+    <link rel="stylesheet" href="{% static 'books/style.css' %}">
+</head>
+
+<body>
+    <header class="navbar">
+        <h2>Library Administration</h2>
+        <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a href="{% url 'browse_books' %}">Browse Books</a>
+        <a href="{% url 'add_user' %}">Add User</a>
+    </header>
+
+        <main class="hero">
+        <section class="users-panel">
+
+            <h1>Registered Library Users</h1>
+            <p>View and manage all registered library members.</p>
+
+            <div class="users-summary">
+                Total Registered Users: <strong>{{ users|length }}</strong>
+            </div>
+
+            {% if users %}
+                <div class="table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Sl. No.</th>
+                                <th>User ID</th>
+                                <th>Full Name</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ user.user_id }}</td>
+                                <td>{{ user.name }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>No registered users found.</p>
+            {% endif %}
+
+            <a class="action-button" href="{% url 'add_user' %}">
+                + Register New User
+            </a>
+
+        </section>
+    </main>
+</body>
+</html>

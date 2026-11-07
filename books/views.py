@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Book,IssuedBook
+from .models import Book,IssuedBook,LibraryUser
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -7,6 +7,9 @@ from django.http import HttpResponseForbidden
 from datetime import date, timedelta
 from django.db import connection, transaction
 from django.utils import timezone
+from django.contrib import messages
+from django.db import IntegrityError
+from django.db.models import Max
 
 
 def home(request):
@@ -130,11 +133,12 @@ def issue_book(request):
         return HttpResponseForbidden("Access denied.")
 
     message = ""
-
+    users = LibraryUser.objects.all().order_by('user_id')
     if request.method == "POST":
         book_id = request.POST.get("book_id", "").strip()
         user_id = request.POST.get("user_id", "").strip()
-
+        if not LibraryUser.objects.filter(user_id=user_id).exists():
+            message = "Please select a valid registered user."
         try:
             with transaction.atomic():
                 book = Book.objects.select_for_update().get(
@@ -179,6 +183,7 @@ def issue_book(request):
 
     return render(request, "books/issue_book.html", {
         "books": books,
+        "users":users,
         "message": message
     })
 
@@ -226,3 +231,148 @@ def return_book(request):
     return render(request, "books/return_book.html", {
         "message": message
     })
+
+def get_next_user_id():
+    user_ids = LibraryUser.objects.values_list('user_id', flat=True)
+
+    numeric_ids = [
+        int(uid) for uid in user_ids
+        if uid.isdigit()
+    ]
+
+    return str(max(numeric_ids) + 1) if numeric_ids else "101"
+
+@login_required
+def add_user(request):
+    if not request.user.is_staff:
+        return redirect('home')
+
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id', '').strip()
+        name = request.POST.get('name', '').strip()
+
+        if not user_id or not name:
+            messages.error(request, "All fields are required.")
+
+        elif len(user_id) > 20:
+            messages.error(request, "User ID cannot exceed 20 characters.")
+
+        elif len(name) > 100:
+            messages.error(request, "Name cannot exceed 100 characters.")
+
+        elif LibraryUser.objects.filter(user_id=user_id).exists():
+            messages.error(request, "This User ID is already registered.")
+
+        else:
+            try:
+                with transaction.atomic():
+                    LibraryUser.objects.create(
+                        user_id=user_id,
+                        name=name
+                    )
+                messages.success(request, "User registered successfully!")
+                return redirect('user_list')
+
+            except IntegrityError:
+                messages.error(request, "This User ID is already registered.")
+
+
+    next_user_id=get_next_user_id()
+    return render(request, 'books/add_user.html',{'next_user_id':next_user_id})
+
+
+@login_required
+def user_list(request):
+    if not request.user.is_staff:
+        return redirect('home')
+
+    users = LibraryUser.objects.all().order_by('user_id')
+
+    return render(request, 'books/user_list.html', {
+        'users': users
+    })
+
+
+@login_required
+def issue_history(request):
+    if not request.user.is_staff:
+        return redirect('home')
+
+    search = request.GET.get('search', '').strip()
+    status = request.GET.get('status', '').strip()
+
+    query = """
+        SELECT
+            ib.issue_id,
+            ib.user_id,
+            u.name,
+            ib.book_id,
+            b.title,
+            ib.issue_date,
+            ib.due_date,
+            ib.return_date,
+
+            CASE
+                WHEN ib.return_date IS NOT NULL THEN 'Returned'
+                WHEN ib.due_date < CURRENT_DATE THEN 'Overdue'
+                ELSE 'Issued'
+            END AS status,
+
+            GREATEST(
+                COALESCE(ib.return_date, CURRENT_DATE) - ib.due_date,
+                0
+            ) AS overdue_days,
+
+            GREATEST(
+                COALESCE(ib.return_date, CURRENT_DATE) - ib.due_date,
+                0
+            ) * 5 AS fine
+
+        FROM issued_books ib
+        JOIN users u ON ib.user_id = u.user_id
+        JOIN books b ON ib.book_id = b.book_id
+        WHERE 1=1
+    """
+
+    params = []
+
+    if search:
+        query += """
+            AND (
+                ib.user_id ILIKE %s OR
+                u.name ILIKE %s OR
+                ib.book_id ILIKE %s OR
+                b.title ILIKE %s
+            )
+        """
+        search_value = f"%{search}%"
+        params.extend([search_value] * 4)
+
+    if status == 'Issued':
+        query += " AND ib.return_date IS NULL AND ib.due_date >= CURRENT_DATE"
+
+    elif status == 'Overdue':
+        query += " AND ib.return_date IS NULL AND ib.due_date < CURRENT_DATE"
+
+    elif status == 'Returned':
+        query += " AND ib.return_date IS NOT NULL"
+
+    query += " ORDER BY ib.issue_date DESC, ib.issue_id DESC"
+
+    with connection.cursor() as cursor:
+        cursor.execute(query, params)
+        columns = [column[0] for column in cursor.description]
+        records = [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
+
+    return render(request, 'books/issue_history.html', {
+        'records': records,
+        'search': search,
+        'selected_status': status,
+    })
+
+
+
+

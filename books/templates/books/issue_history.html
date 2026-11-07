@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue History - Librix</title>
+    <link rel="stylesheet" href="{% static 'books/style.css' %}">
+</head>
+
+<body>
+    <header class="navbar">
+        <h2>Library Administration</h2>
+        <a href="{% url 'admin_dashboard' %}">Dashboard</a>
+        <a href="{% url 'browse_books' %}">Browse Books</a>
+        <a href="{% url 'user_list' %}">Users</a>
+    </header>
+
+        <main class="hero">
+        <section class="users-panel">
+
+            <h1>Issue & Return History</h1>
+            <p>Track transactions, overdue books and fines.</p>
+
+            <form method="GET" class="history-filter">
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search user or book..."
+                >
+
+                <select name="status">
+                    <option value="">All Statuses</option>
+
+                    <option value="Issued"
+                        {% if selected_status == 'Issued' %}selected{% endif %}>
+                        Issued
+                    </option>
+
+                    <option value="Overdue"
+                        {% if selected_status == 'Overdue' %}selected{% endif %}>
+                        Overdue
+                    </option>
+
+                    <option value="Returned"
+                        {% if selected_status == 'Returned' %}selected{% endif %}>
+                        Returned
+                    </option>
+                </select>
+
+                <button type="submit">Search / Filter</button>
+
+                <a href="{% url 'issue_history' %}">Reset</a>
+
+            </form>
+
+            <div class="table-container">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>Issue ID</th>
+                            <th>User</th>
+                            <th>Book</th>
+                            <th>Issue Date</th>
+                            <th>Due Date</th>
+                            <th>Return Date</th>
+                            <th>Status</th>
+                            <th>Late Days</th>
+                            <th>Fine (₹)</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for record in records %}
+                        <tr>
+                            <td>{{ record.issue_id }}</td>
+                            <td>{{ record.user_id }} - {{ record.name }}</td>
+                            <td>{{ record.book_id }} - {{ record.title }}</td>
+                            <td>{{ record.issue_date }}</td>
+                            <td>{{ record.due_date }}</td>
+                            <td>{{ record.return_date|default:"—" }}</td>
+
+                            <td>
+                                <span class="status-{{ record.status|lower }}">
+                                    {{ record.status }}
+                                </span>
+                            </td>
+
+                            <td>{{ record.overdue_days }}</td>
+                            <td>₹{{ record.fine }}</td>
+                        </tr>
+
+                        {% empty %}
+                        <tr>
+                            <td colspan="9">No matching records found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+    </main>
+</body>
+</html>

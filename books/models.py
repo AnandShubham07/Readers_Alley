@@ -19,6 +19,17 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+class LibraryUser(models.Model):
+    user_id = models.CharField(max_length=20, primary_key=True)
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'users'
+        managed = False
+
+    def __str__(self):
+        return f"{self.user_id} - {self.name}"
+
 class IssuedBook(models.Model):
     issue_id = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=20)

@@ -11,4 +11,7 @@ urlpatterns=[
     path('add-book/',views.add_book,name='add_book'),
     path('issue-book/',views.issue_book,name='issue_book'),
     path('return-book/',views.return_book,name='return_book'),
+    path('add-user/', views.add_user, name='add_user'),
+    path('users/', views.user_list, name='user_list'),
+    path('issue-history/', views.issue_history, name='issue_history'),
 ]
