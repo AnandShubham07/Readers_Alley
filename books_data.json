@@ -1,0 +1,47 @@
+[
+{
+  "model": "books.book",
+  "pk": "B101",
+  "fields": {
+    "title": "python",
+    "author": "ABC",
+    "available": true
+  }
+},
+{
+  "model": "books.book",
+  "pk": "B102",
+  "fields": {
+    "title": "database management system",
+    "author": "ABC2",
+    "available": true
+  }
+},
+{
+  "model": "books.book",
+  "pk": "B103",
+  "fields": {
+    "title": "mata ka aanchal",
+    "author": "shiv pujan sahay",
+    "available": true
+  }
+},
+{
+  "model": "books.book",
+  "pk": "B104",
+  "fields": {
+    "title": "The Girl on the train",
+    "author": "Ruskin Bond",
+    "available": true
+  }
+},
+{
+  "model": "books.book",
+  "pk": "B105",
+  "fields": {
+    "title": "Rashmi Rathi",
+    "author": "Ramdhari singh Dinkar",
+    "available": true
+  }
+}
+]
