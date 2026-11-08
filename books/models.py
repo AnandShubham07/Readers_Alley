@@ -7,14 +7,16 @@ from django.db import models
 
 
 class Book(models.Model):
-    book_id = models.CharField(max_length=20, primary_key=True)
+    book_id = models.CharField(
+        max_length=20,
+        primary_key=True
+    )
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
     available = models.BooleanField(default=True, null=True)
 
     class Meta:
         db_table = 'books'
-        managed = False
 
     def __str__(self):
         return self.title
