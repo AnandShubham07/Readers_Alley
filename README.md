@@ -10,6 +10,36 @@ Features
 - PostgreSQL database integration
 - Django-based web interface
 
+## Screenshots
+
+### Home Page
+![Librix Home Page](screenshots/home.png)
+
+### Explore Books
+![Explore Books](screenshots/browse_books.png)
+
+### Admin Login
+![Admin Login](screenshots/admin_login.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin_dashboard.png)
+
+### Add Library Users
+![Add Library Users](screenshots/add_users.png)
+
+### Registered Users
+![Registered Users](screenshots/registered_users.png)
+
+### Issue Book
+![Issue Book](screenshots/issue_book.png)
+
+### Issue and Return History
+![Issue and Return History](screenshots/issue_return_history.png)
+
+## Image Credits
+
+- Background image: [Unsplash](https://unsplash.com/)
+
 Technology Stack
 
 - Language: Python
