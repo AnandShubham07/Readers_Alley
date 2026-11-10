@@ -15,6 +15,9 @@ Features
 ### Home Page
 ![Librix Home Page](screenshots/home.png)
 
+### Explore Your Library
+![Explore Your Library](screenshots/explore.png)
+
 ### Explore Books
 ![Explore Books](screenshots/browse_books.png)
 
@@ -25,16 +28,16 @@ Features
 ![Admin Dashboard](screenshots/admin_dashboard.png)
 
 ### Add Library Users
-![Add Library Users](screenshots/add_users.png)
+![Add Library Users](screenshots/Add_users.png)
 
 ### Registered Users
-![Registered Users](screenshots/registered_users.png)
+![Registered Users](screenshots/Registered_library_users.png)
 
 ### Issue Book
-![Issue Book](screenshots/issue_book.png)
+![Issue Book](screenshots/Issue_book.png)
 
 ### Issue and Return History
-![Issue and Return History](screenshots/issue_return_history.png)
+![Issue and Return History](screenshots/Issue&Return_history.png)
 
 ## Image Credits
 
